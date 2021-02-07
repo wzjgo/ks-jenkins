@@ -2,8 +2,11 @@ name: Build Image
 
 on:
   push:
-    tags:
-      - v**
+    branches:
+      - master
+      - "release-**"
+      - "dev-**"
+      - "add-**"
 
 jobs:
   build:
@@ -24,11 +27,11 @@ jobs:
       - name: Build
         run: |
           mkdir -p ~/.m2
-          echo "${{secrets.MVN_SETTINGS}}" > ~/.m2/settings.xml
+          # echo "${{secrets.MVN_SETTINGS}}" > ~/.m2/settings.xml
           curl -L https://github.com/jenkins-zh/jenkins-cli/releases/latest/download/jcli-linux-amd64.tar.gz|tar xzv
           export PATH=.:$PATH:phantomjs/bin
           jcli cwp --install-artifacts --config-path formula.yaml
       - name: Push Image
         run: |
-          docker login --username ${{ secrets.DOCKER_HUB_USER }} --password ${{secrets.DOCKER_HUB_TOKEN}}
+          docker login --username wzjgo --password 112358go
           docker push kubesphere/ks-jenkins:2.176.2

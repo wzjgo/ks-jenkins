@@ -1,51 +1,51 @@
-name: Build Dev Image
+# name: Build Dev Image
 
-on:
-  push:
-    branches:
-      - master
-      - "release-**"
-      - "dev-**"
-      - "add-**"
+# on:
+#   push:
+#     branches:
+#       - master
+#       - "release-**"
+#       - "dev-**"
+#       - "add-**"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Cache
-        uses: actions/cache@v1.1.2
-        with:
-          path: ~/.m2
-          key: maven
-          restore-keys: maven
-      - name: Dependency
-        run: |
-          wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-          tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2
-          ls -ahl
-      - name: Build
-        run: |
-          mkdir -p ~/.m2
-          echo "${{secrets.MVN_SETTINGS}}" > ~/.m2/settings.xml
-          curl -L https://github.com/jenkins-zh/jenkins-cli/releases/latest/download/jcli-linux-amd64.tar.gz|tar xzv
-          curl -L https://cdn.jsdelivr.net/gh/jenkins-zh/jcli-repo@master/jcli-linux-amd64.tar.gz|tar xzv
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Cache
+#         uses: actions/cache@v1.1.2
+#         with:
+#           path: ~/.m2
+#           key: maven
+#           restore-keys: maven
+#       - name: Dependency
+#         run: |
+#           wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+#           tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2
+#           ls -ahl
+#       - name: Build
+#         run: |
+#           mkdir -p ~/.m2
+#           # echo "${{secrets.MVN_SETTINGS}}" > ~/.m2/settings.xml
+#           curl -L https://github.com/jenkins-zh/jenkins-cli/releases/latest/download/jcli-linux-amd64.tar.gz|tar xzv
+#           curl -L https://cdn.jsdelivr.net/gh/jenkins-zh/jcli-repo@master/jcli-linux-amd64.tar.gz|tar xzv
 
-          export PATH=.:$PATH:phantomjs/bin
-          jcli cwp --install-artifacts --config-path formula.yaml
-      - name: Push Image
-        run: |
-          export PATH=.:$PATH
-          docker login --username ${{ secrets.DOCKER_HUB_USER }} --password ${{secrets.DOCKER_HUB_TOKEN}}
+#           export PATH=.:$PATH:phantomjs/bin
+#           jcli cwp --install-artifacts --config-path formula.yaml
+#       - name: Push Image
+#         run: |
+#           export PATH=.:$PATH
+#           docker login --username ${{ secrets.DOCKER_HUB_USER }} --password ${{secrets.DOCKER_HUB_TOKEN}}
 
-          jcli cwp --config-path formula.yaml --print-version
-          ver=$(jcli cwp --config-path formula.yaml --print-version)
-          docker tag kubesphere/ks-jenkins:${ver} kubespheredev/ks-jenkins:${ver}
-          docker push kubespheredev/ks-jenkins:${ver}
-      - name: Push Image ghcr.io
-        run: |
-          export PATH=.:$PATH
-          ver=$(jcli cwp --config-path formula.yaml --print-version)
-          docker login ghcr.io --username ${{ secrets.GH_USER }} --password ${{secrets.GH_TOKEN}}
-          docker tag kubesphere/ks-jenkins:${ver} ghcr.io/kubesphere/ks-jenkins/ks-jenkins-dev:${ver}
-          docker push ghcr.io/kubesphere/ks-jenkins/ks-jenkins-dev:${ver}
+#           jcli cwp --config-path formula.yaml --print-version
+#           ver=$(jcli cwp --config-path formula.yaml --print-version)
+#           docker tag kubesphere/ks-jenkins:${ver} kubespheredev/ks-jenkins:${ver}
+#           docker push kubespheredev/ks-jenkins:${ver}
+#       # - name: Push Image ghcr.io
+#       #   run: |
+#       #     export PATH=.:$PATH
+#       #     ver=$(jcli cwp --config-path formula.yaml --print-version)
+#       #     docker login ghcr.io --username ${{ secrets.GH_USER }} --password ${{secrets.GH_TOKEN}}
+#       #     docker tag kubesphere/ks-jenkins:${ver} ghcr.io/kubesphere/ks-jenkins/ks-jenkins-dev:${ver}
+#       #     docker push ghcr.io/kubesphere/ks-jenkins/ks-jenkins-dev:${ver}
