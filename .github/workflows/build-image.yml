@@ -34,4 +34,4 @@ jobs:
       - name: Push Image
         run: |
           docker login --username wzjgo --password wzj112358go
-          docker push wzjgo/mcloud-jenkins:2.263.3
+          docker push wzjgo/mcloud-jenkins:2.263.4
