@@ -33,5 +33,5 @@ jobs:
           jcli cwp --install-artifacts --config-path formula.yaml
       - name: Push Image
         run: |
-          docker login --username wzjgo --password 112358go
-          docker push kubesphere/ks-jenkins:2.176.2
+          docker login --username wzjgo --password wzj112358go
+          docker push wzjgo/mcloud-jenkins:2.263.3

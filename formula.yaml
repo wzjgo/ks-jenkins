@@ -1,12 +1,12 @@
 bundle:
-  groupId: io.github.ks-jenkins
-  artifactId: ks-jenkins
-  description: Jenkins formula for Kubesphere
-  vendor: Kubesphere Community
+  groupId: io.github.mcloud-jenkins
+  artifactId: mcloud-jenkins
+  description: Jenkins formula for mcloud
+  vendor: Mcloud Community
 buildSettings:
   docker:
-    base: jenkins/jenkins:2.249.1
-    tag: kubesphere/ks-jenkins:2.249.1
+    base: jenkins/jenkins:2.263.3
+    tag: wzjgo/mcloud-jenkins:2.263.3
     build: true
 war:
   groupId: org.jenkins-ci.main
