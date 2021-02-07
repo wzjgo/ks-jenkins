@@ -12,7 +12,7 @@ war:
   groupId: org.jenkins-ci.main
   artifactId: jenkins-war
   source:
-    version: 2.249.1
+    version: 2.263.3
 plugins:
   - groupId: io.jenkins
     artifactId: configuration-as-code
