@@ -186,10 +186,10 @@ plugins:
     artifactId: font-awesome-api
     source:
       version: 5.15.1-1
-  - groupId: org.jenkins-ci.plugins
-    artifactId: build-monitor-plugin
-    source:
-      version: 1.12-SNAPSHOT
+  # - groupId: org.jenkins-ci.plugins
+  #   artifactId: build-monitor-plugin
+  #   source:
+  #     version: 1.12-SNAPSHOT
   - groupId: org.jenkins-ci.plugins
     artifactId: build-timeout
     source:
